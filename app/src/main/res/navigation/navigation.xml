@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/headLinesFragment">
+
+
+    <fragment
+        android:id="@+id/articleFragment"
+        android:name="com.training.hearthenews.ui.fragments.ArticleFragment"
+        android:label="ArticleFragment" >
+        <argument
+            android:name="article"
+            app:argType="com.training.hearthenews.models.Article"/>
+        <action
+            android:id="@+id/action_articleFragment_to_headLinesFragment"
+            app:destination="@id/headLinesFragment" />
+        <action
+            android:id="@+id/action_articleFragment_to_favouriteFragment"
+            app:destination="@id/favouriteFragment" />
+        <action
+            android:id="@+id/action_articleFragment_to_searchFragment2"
+            app:destination="@id/searchFragment2" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/favouriteFragment"
+        android:name="com.training.hearthenews.ui.fragments.FavouriteFragment"
+        android:label="FavouriteFragment" >
+        <action
+            android:id="@+id/action_favouriteFragment_to_articleFragment"
+            app:destination="@id/articleFragment" />
+        <action
+            android:id="@+id/action_favouriteFragment_to_headLinesFragment"
+            app:destination="@id/headLinesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/headLinesFragment"
+        android:name="com.training.hearthenews.ui.fragments.HeadLinesFragment"
+        android:label="HeadLinesFragment" >
+        <action
+            android:id="@+id/action_headLinesFragment_to_searchFragment2"
+            app:destination="@id/searchFragment2" />
+        <action
+            android:id="@+id/action_headLinesFragment_to_articleFragment"
+            app:destination="@id/articleFragment" />
+        <action
+            android:id="@+id/action_headLinesFragment_to_favouriteFragment"
+            app:destination="@id/favouriteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.training.hearthenews.ui.fragments.SplashFragment"
+        android:label="fragment_splash2"
+        tools:layout="@layout/fragment_splash2" >
+        <action
+            android:id="@+id/action_splashFragment_to_headLinesFragment"
+            app:destination="@id/headLinesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment2"
+        android:name="com.training.hearthenews.ui.fragments.SearchFragment"
+        android:label="SearchFragment" >
+        <action
+            android:id="@+id/action_searchFragment2_to_articleFragment"
+            app:destination="@id/articleFragment" />
+        <action
+            android:id="@+id/action_searchFragment2_to_headLinesFragment"
+            app:destination="@id/headLinesFragment" />
+        <action
+            android:id="@+id/action_searchFragment2_to_articleFragment2"
+            app:destination="@id/articleFragment" />
+        <action
+            android:id="@+id/action_searchFragment2_to_favouriteFragment"
+            app:destination="@id/favouriteFragment" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_to_favouriteFragment"
+        app:destination="@id/favouriteFragment" />
+
+    <action
+        android:id="@+id/action_global_to_searchFragment"
+        app:destination="@id/searchFragment2" />
+</navigation>
