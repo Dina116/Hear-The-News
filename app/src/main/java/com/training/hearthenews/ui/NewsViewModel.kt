@@ -63,9 +63,6 @@ class NewsViewModel(app: Application, val newsRepository: NewsRepository): Andro
             headlines.postValue(handleHeadLineResponse(response))
             Toast.makeText(getApplication(), "Response is successful but articles list is empty", Toast.LENGTH_SHORT).show()
         }
-//        else if(response.isSuccessful && response.body()?.articles.isNullOrEmpty()){
-//
-//        }
 
     }
 
@@ -74,9 +71,6 @@ class NewsViewModel(app: Application, val newsRepository: NewsRepository): Andro
         if(response.isSuccessful && response.body()?.articles.isNullOrEmpty()){
             Toast.makeText(getApplication(), "Response is successful but articles list is empty", Toast.LENGTH_SHORT).show()
         }
-//        else if(response.isSuccessful ){
-//            headlines.postValue(handleHeadLineResponse(response))
-//        }
 
     }
 

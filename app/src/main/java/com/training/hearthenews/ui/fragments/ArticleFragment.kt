@@ -23,7 +23,6 @@ class ArticleFragment : Fragment(R.layout.fragment_article) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //val myArg=args.myArg
         binding= FragmentArticleBinding.bind(view)
         newsViewModel=(activity as MainActivity).newsViewModel
         val article=args.article

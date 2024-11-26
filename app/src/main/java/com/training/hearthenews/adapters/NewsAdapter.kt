@@ -30,13 +30,6 @@ import com.training.hearthenews.ui.fragments.ArticleFragmentArgs
 class NewsAdapter(val fragment: Fragment, val  articles: MutableList<Article>,private val newsViewModel: NewsViewModel): RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
 
     inner class ArticleViewHolder(val binding: NewsItemBinding): RecyclerView.ViewHolder(binding.root)
-    lateinit var articleImage: ImageView
-    lateinit var articleTitle: TextView
-   // lateinit var newsViewModel: NewsViewModel
-//    val args: ArticleFragmentArgs by navArgs()
-//    val article = args.article
-
-
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -57,8 +50,6 @@ class NewsAdapter(val fragment: Fragment, val  articles: MutableList<Article>,pr
             return oldItem == newItem
         }
     }
-    val differ = AsyncListDiffer(this, differCallback)
-
     override fun onBindViewHolder(holder: NewsAdapter.ArticleViewHolder, position: Int) {
         val article = articles[position] // Access article from the list differ.currentList[position]//
         val url = article.url
@@ -69,31 +60,14 @@ class NewsAdapter(val fragment: Fragment, val  articles: MutableList<Article>,pr
             .error(R.drawable.broken_image)
             .transition(DrawableTransitionOptions.withCrossFade(1000))
             .into(holder.binding.articleIv)
-        //val url = articles[position].url
-
-
-
         holder.binding.articleContainer.setOnClickListener {
             val i = Intent(Intent.ACTION_VIEW, url.toUri())
             Toast.makeText(this.fragment.requireContext(), "Article opened successfully in browser", Toast.LENGTH_SHORT).show()
             fragment.startActivity(i)
-//            onItemClickListener?.let {
-//                it(articles[position])
-//            }
         }
         holder.binding.favFab.setOnClickListener {
             newsViewModel.addToFavourites(article)
             Snackbar.make(holder.itemView,"Add to favourites successfully", Snackbar.LENGTH_SHORT).show()
-//            val position = holder.adapterPosition
-//            if (position != RecyclerView.NO_POSITION) {
-//                articles.add(position, article) // Assuming you want to add at the current position
-//                notifyItemInserted(position)
-//            } else {
-//                articles.add(article)
-//                notifyItemInserted(articles.size - 1)
-//            }
-
-        //newsViewModel.addToFavourites(article)
         }
 
         holder.binding.shareFab.setOnClickListener {

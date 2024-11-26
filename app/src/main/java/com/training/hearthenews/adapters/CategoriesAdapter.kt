@@ -39,16 +39,8 @@ class CategoriesAdapter(
     }
 
     override fun onBindViewHolder(holder: CategoriesAdapter.CategoryViewHolder, position: Int) {
-        val viewModel = ViewModelProvider(fragment)[CategoryViewModel::class.java]
-
         val category = categories[position]
         holder.bind(category)
-        // holder.binding.categoryIv.setImageResource(categories[position].categoryImgId)
-
-//        holder.binding.categoryContainer.setOnClickListener {
-//            viewModel.updateCategoryImage(categories[position].categoryImgId)
-//            Log.d("Category", "Category clicked: ${category.name}")
-//        }
     }
 
     override fun getItemCount(): Int = categories.size

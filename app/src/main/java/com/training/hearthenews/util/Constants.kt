@@ -8,5 +8,5 @@ class Constants {
         const val QUERY_PAGE_SIZE = 20
 
 
-    }//d65fb642634249529947df670aa69d90
+    }
 }

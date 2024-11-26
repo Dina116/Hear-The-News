@@ -25,14 +25,6 @@ class FavouriteFragment : Fragment(R.layout.fragment_favourite) {
     lateinit var newsAdapter: NewsAdapter
     lateinit var binding: FragmentFavouriteBinding
 
-//    override fun onCreateView(
-//        inflater: LayoutInflater, container: ViewGroup?,
-//        savedInstanceState: Bundle?
-//    ): View? {
-//        // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_favourite, container, false)
-//    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentFavouriteBinding.bind(view)
@@ -41,9 +33,6 @@ class FavouriteFragment : Fragment(R.layout.fragment_favourite) {
         setUpFavouriteRecycler()
 
         newsAdapter.setOnItemClickListener {
-            val bundle = Bundle().apply {
-                putSerializable("article", it)
-            }
             val action = FavouriteFragmentDirections.actionFavouriteFragmentToArticleFragment(it)
             findNavController().navigate(action)
         }

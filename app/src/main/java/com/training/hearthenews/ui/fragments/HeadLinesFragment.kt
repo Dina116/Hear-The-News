@@ -50,10 +50,7 @@ class HeadLinesFragment : Fragment(R.layout.fragment_head_lines) {
     lateinit var retryButton: Button
     lateinit var errorText: TextView
     lateinit var itemHeadlinesError: CardView
-
-    lateinit var categoryViewModel: CategoryViewModel
     lateinit var categoriesAdapter: CategoriesAdapter
-    lateinit var categoryImage: ImageView
     lateinit var binding: FragmentHeadLinesBinding
 
     var selectedCategory: String? = null
@@ -74,14 +71,11 @@ class HeadLinesFragment : Fragment(R.layout.fragment_head_lines) {
         errorText = view.findViewById(R.id.errorText)
 
         newsViewModel = (activity as MainActivity).newsViewModel
-        //categoryViewModel = (activity as MainActivity).categoryViewModel
 
         setUpHeadLinesRecycler()
 
         newsAdapter.setOnItemClickListener {article->
-//            val bundle = Bundle().apply {
-//                putSerializable("article", it)
-//            }
+
             val action = HeadLinesFragmentDirections.actionHeadLinesFragmentToArticleFragment(article)
             findNavController().navigate(action)
         }
@@ -203,68 +197,12 @@ class HeadLinesFragment : Fragment(R.layout.fragment_head_lines) {
         }
     }
 
-//    private fun loadNewsCategories() {
-//        val retrofit = Retrofit
-//            .Builder()
-//            .baseUrl("https://newsapi.org")
-//            .addConverterFactory(GsonConverterFactory.create())
-//            .build()
-//        val c = retrofit.create(NewsApi::class.java)
-//        val viewModel = ViewModelProvider(this)[CategoryViewModel::class.java]
-//        val categoryImage = viewModel.categoryImage.value
-//        //categoryImage= binding.categoryRv.findViewById(R.id.category_iv)
-//       categoryViewModel = ViewModelProvider(this)[CategoryViewModel::class.java]
-////        categoryViewModel.categoryImage.observe(viewLifecycleOwner, Observer { imageResId ->})
-//        categoryViewModel.categoryImage.observe(viewLifecycleOwner, Observer{ imageResId ->
-//            lifecycleScope.launch {
-//                when (imageResId) {
-//                    R.drawable.tech -> {
-//                        val response = c.getTechnologyNews()
-//                        if (response.isSuccessful) {
-//                            newsCallback("Technology News")
-//                        } else {
-//                            showErrorMessage("Error loading Technology News")
-//                        }
-//                    }
-//
-//                    R.drawable.health -> {
-//                        val response = c.getHealthNews()
-//                        if (response.isSuccessful) {
-//                            newsCallback("Health News")
-//                        } else {
-//                            showErrorMessage("Error loading Health News")
-//                        }
-//                    }
-//
-//                    R.drawable.sports -> {
-//                        val response = c.getSportsNews()
-//                        if (response.isSuccessful) {
-//                            newsCallback("Sports News")
-//                        } else {
-//                            showErrorMessage("Error loading Sports News")
-//                        }
-//                    }
-//
-//                    else -> {
-//                        showErrorMessage("Unknown category selected")
-//                    }
-//                }
-//            }
-//
-//        })
-//    }
 
     private fun showNews(articles: MutableList<Article>) {
         val newsAdapter = NewsAdapter(this, articles, newsViewModel)
         binding.recyclerHeadlines.adapter = newsAdapter
     }
 
-//    private fun showCategories(categories: List<Category>) {
-//        val categoriesAdapter = CategoriesAdapter(this, categories, onItemClick = { category ->
-//            categoryViewModel.updateCategoryImage(category.categoryImgId)
-//        })
-//        binding.categoryRv.adapter = categoriesAdapter
-//    }
 private fun showCategories(categories: List<Category>) {
     categoriesAdapter = CategoriesAdapter(fragment = this, categories = categories, onItemClick = { category ->
         selectedCategory = category.name // حفظ الفئة المحددة
@@ -275,27 +213,6 @@ private fun showCategories(categories: List<Category>) {
         adapter = categoriesAdapter
     }
 }
-
-//    private fun loadCategories(): List<Category> {
-//        // Load categories and news
-//        val categories = arrayOf(
-//            R.drawable.tech,
-//            R.drawable.health,
-//            R.drawable.sports,
-//            R.drawable.business
-//        )
-//        val categoryNames = arrayOf(
-//            "Technology",
-//            "Health",
-//            "Sports",
-//            "Business"
-//        )
-//        val categoryList = mutableListOf<Category>()
-//        for (i in categories.indices) {
-//            categoryList.add(Category(categories[i], categoryNames[i]))
-//        }
-//        return categoryList
-//    }
 private fun loadCategories(): List<Category> {
     return listOf(
         Category(R.drawable.tech,"Technology"),
@@ -304,9 +221,6 @@ private fun loadCategories(): List<Category> {
         Category( R.drawable.health,"Health")
     )
 }
-
-
-    // to loadNews after the user get back from settings activity without refreshing the news
     override fun onResume() {
         super.onResume()
         binding.paginationProgressBar.isVisible = true

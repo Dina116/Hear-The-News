@@ -24,7 +24,6 @@ import com.training.hearthenews.ui.fragments.HeadLinesFragment
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     lateinit var newsViewModel: NewsViewModel
-  // lateinit var categoryViewModel: CategoryViewModel
     private lateinit var navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,51 +88,5 @@ class MainActivity : AppCompatActivity() {
 
 
     }
-//    val navHostFragment = supportFragmentManager.findFragmentById(R.id.newsNavHostFragment) as NavHostFragment
-//    navController = navHostFragment.navController
-//    val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottomNavigationView)
-//    //NavigationUI.setupWithNavController(bottomNavigationView, navController)
-//
-//    bottomNavigationView.setOnNavigationItemSelectedListener { item ->
-//        when (item.itemId) {
-//            R.id.headlinesFragment -> {
-//                navController.navigate(R.id.headlinesFragment) // Navigate to HomeFragment
-//                true
-//            }
-//
-//            R.id.favouritesFragment-> {
-//                navController.navigate(R.id.favouriteFragment) // Navigate to FavoritesFragment
-//                true
-//            }
-//            R.id.searchFragment -> {
-//                navController.navigate(R.id.searchFragment) // Navigate to SearchFragment
-//                true
-//            }
-//
-//
-//            else -> false
-//        }
-//
-//    }
 
-//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        menuInflater.inflate(R.menu.menu, menu)
-//        //applyFontToMenuItem(menu)
-//        return true
-//    }
-//
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        return when (item.itemId) {
-//            R.id.favouriteFragment -> {
-//                findNavController(R.id.newsNavHostFragment).navigate(R.id.favouriteFragment)
-//                true
-//            }
-//            R.id.searchFragment -> {
-//                findNavController(R.id.newsNavHostFragment).navigate(R.id.searchFragment)
-//                true
-//            }
-//
-//            else -> super.onOptionsItemSelected(item)
-//        }
-//    }
 }
