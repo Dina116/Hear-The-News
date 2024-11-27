@@ -33,7 +33,7 @@ class FavouriteFragment : Fragment(R.layout.fragment_favourite) {
         setUpFavouriteRecycler()
 
         newsAdapter.setOnItemClickListener {
-            val action = FavouriteFragmentDirections.actionFavouriteFragmentToArticleFragment(it)
+            val action = FavouriteFragmentDirections.actionFavouriteFragmentToArticleFragment()
             findNavController().navigate(action)
         }
         val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(

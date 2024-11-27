@@ -18,22 +18,25 @@ class NewsRepository(val db: ArticleDataBase) {
         return  RetrofitInstance.api.searchForNews(searchQuery, pageNumber)
 
     }
-
-suspend fun getBusinessNews(pageNumber: Int): Response<NewsResponse> {
-    return RetrofitInstance.api.getBusinessNews(pageNumber)
-}
-
-    suspend fun getSportsNews(pageNumber: Int): Response<NewsResponse> {
-        return RetrofitInstance.api.getSportsNews(pageNumber)
+    suspend fun getNewsByCategory(category: String, countryCode: String, pageNumber: Int): Response<NewsResponse> {
+        return RetrofitInstance.api.getNewsByCategory(category = category, countryCode = countryCode,pageNumber = pageNumber)
     }
 
-    suspend fun getHealthNews(pageNumber: Int): Response<NewsResponse> {
-        return RetrofitInstance.api.getHealthNews(pageNumber)
-    }
-
-    suspend fun getTechnologyNews(pageNumber: Int): Response<NewsResponse> {
-        return RetrofitInstance.api.getTechnologyNews(pageNumber)
-    }
+//suspend fun getBusinessNews(pageNumber: Int): Response<NewsResponse> {
+//    return RetrofitInstance.api.getBusinessNews(pageNumber)
+//}
+//
+//    suspend fun getSportsNews(pageNumber: Int): Response<NewsResponse> {
+//        return RetrofitInstance.api.getSportsNews(pageNumber)
+//    }
+//
+//    suspend fun getHealthNews(pageNumber: Int): Response<NewsResponse> {
+//        return RetrofitInstance.api.getHealthNews(pageNumber)
+//    }
+//
+//    suspend fun getTechnologyNews(pageNumber: Int): Response<NewsResponse> {
+//        return RetrofitInstance.api.getTechnologyNews(pageNumber)
+//    }
 
     suspend fun upsert(article: Article) = db.getArticleDao().upsert(article)
 

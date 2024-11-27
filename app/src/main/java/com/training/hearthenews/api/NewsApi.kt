@@ -28,33 +28,40 @@ interface NewsApi {
         @Query("apiKey")
         apiKey: String = API_KEY
     ): Response<NewsResponse>
-    @GET("v2/top-headlines?country=us&category=business")
-    suspend fun getBusinessNews(
-        @Query("page")
-        pageNumber: Int = 1,
+//    @GET("v2/top-headlines/sources?country=us&category=business")//v2/top-headlines?country=us&category=business
+//    suspend fun getBusinessNews(
+//        @Query("page")
+//        pageNumber: Int = 1,
+//        @Query("apiKey") apiKey: String = API_KEY
+//    ): Response<NewsResponse>
+//
+//    @GET("v2/top-headlines/sources?country=us&category=sports")
+//    suspend fun getSportsNews(
+//        @Query("page")
+//        pageNumber: Int = 1,
+//        @Query("apiKey") apiKey: String = API_KEY
+//    ): Response<NewsResponse>
+//
+//    @GET("v2/top-headlines/sources?country=us&category=health")
+//    suspend fun getHealthNews(
+//        @Query("page")
+//        pageNumber: Int = 1,
+//        @Query("apiKey") apiKey: String = API_KEY
+//    ): Response<NewsResponse>
+//
+//    @GET("v2/top-headlines/sources?country=us&category=technology")
+//    suspend fun getTechnologyNews(
+//        @Query("page")
+//        pageNumber: Int = 1,
+//        @Query("apiKey") apiKey: String = API_KEY
+//    ): Response<NewsResponse>
+
+    @GET("v2/top-headlines/sources?")
+    suspend fun getNewsByCategory(
+        @Query("country") countryCode: String = "us",
+        @Query("category") category: String,
+        @Query("page") pageNumber: Int = 1,
         @Query("apiKey") apiKey: String = API_KEY
     ): Response<NewsResponse>
-
-    @GET("v2/top-headlines?country=us&category=sports")
-    suspend fun getSportsNews(
-        @Query("page")
-        pageNumber: Int = 1,
-        @Query("apiKey") apiKey: String = API_KEY
-    ): Response<NewsResponse>
-
-    @GET("v2/top-headlines?country=us&category=health")
-    suspend fun getHealthNews(
-        @Query("page")
-        pageNumber: Int = 1,
-        @Query("apiKey") apiKey: String = API_KEY
-    ): Response<NewsResponse>
-
-    @GET("v2/top-headlines?country=us&category=technology")
-    suspend fun getTechnologyNews(
-        @Query("page")
-        pageNumber: Int = 1,
-        @Query("apiKey") apiKey: String = API_KEY
-    ): Response<NewsResponse>
-
 
 }

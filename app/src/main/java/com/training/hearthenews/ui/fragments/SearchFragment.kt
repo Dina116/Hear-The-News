@@ -58,7 +58,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             val bundle = Bundle().apply {
                 putSerializable("article", it)
             }
-            val action=SearchFragmentDirections.actionSearchFragment2ToArticleFragment(it)
+            val action=SearchFragmentDirections.actionSearchFragment2ToCategoryFragment()
             findNavController().navigate(action)
         }
 

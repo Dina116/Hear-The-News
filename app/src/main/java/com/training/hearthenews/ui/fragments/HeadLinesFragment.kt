@@ -26,6 +26,7 @@ import com.training.hearthenews.R
 import com.training.hearthenews.adapters.CategoriesAdapter
 import com.training.hearthenews.adapters.NewsAdapter
 import com.training.hearthenews.api.NewsApi
+import com.training.hearthenews.databinding.FragmentCategoryBinding
 import com.training.hearthenews.databinding.FragmentHeadLinesBinding
 import com.training.hearthenews.models.Article
 import com.training.hearthenews.models.Category
@@ -52,12 +53,33 @@ class HeadLinesFragment : Fragment(R.layout.fragment_head_lines) {
     lateinit var itemHeadlinesError: CardView
     lateinit var categoriesAdapter: CategoriesAdapter
     lateinit var binding: FragmentHeadLinesBinding
+     lateinit var categoryFragment:CategoryFragment
+     lateinit var bindingCategory:FragmentCategoryBinding
 
     var selectedCategory: String? = null
+
+    private val categories = listOf(
+        Category(R.drawable.tech, "Technology"),
+        Category(R.drawable.sports, "Sports"),
+        Category(R.drawable.business, "Business"),
+        Category(R.drawable.health, "Health")
+    )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHeadLinesBinding.bind(view)
+        categoriesAdapter = CategoriesAdapter(
+            fragment = this, categories,
+            onItemClick = { category ->
+                selectedCategory = category.name
+                Toast.makeText(activity, "Go to news of category you select", Toast.LENGTH_SHORT).show()
+                val action = HeadLinesFragmentDirections.actionHeadLinesFragmentToCategoryFragment()
+                findNavController().navigate(action)
+                loadNewsCategories(selectedCategory)
+            },
+        )
+        binding.categoryRv.adapter = categoriesAdapter
+
 
         val inflater =
             requireContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -71,12 +93,15 @@ class HeadLinesFragment : Fragment(R.layout.fragment_head_lines) {
         errorText = view.findViewById(R.id.errorText)
 
         newsViewModel = (activity as MainActivity).newsViewModel
+        categoryFragment = CategoryFragment()
+        bindingCategory = FragmentCategoryBinding.inflate(layoutInflater)
 
         setUpHeadLinesRecycler()
 
-        newsAdapter.setOnItemClickListener {article->
+        newsAdapter.setOnItemClickListener { article ->
 
-            val action = HeadLinesFragmentDirections.actionHeadLinesFragmentToArticleFragment(article)
+            val action =
+                HeadLinesFragmentDirections.actionHeadLinesFragmentToCategoryFragment()
             findNavController().navigate(action)
         }
         newsViewModel.headlines.observe(viewLifecycleOwner, Observer { response ->
@@ -109,7 +134,8 @@ class HeadLinesFragment : Fragment(R.layout.fragment_head_lines) {
                 is Resource.Loading<*> -> {
                     showProgressBar()
                 }
-                else->{}
+
+                else -> {}
 
             }
 
@@ -117,9 +143,9 @@ class HeadLinesFragment : Fragment(R.layout.fragment_head_lines) {
         retryButton.setOnClickListener {
             newsViewModel.getHeadLines("us")
         }
-        val categories = loadCategories()
-        showCategories(categories)
-        loadNewsCategories(selectedCategory)
+//        val categories = loadCategories()
+//        showCategories(categories)
+//        loadNewsCategories(selectedCategory)
 
     }
 
@@ -191,6 +217,13 @@ class HeadLinesFragment : Fragment(R.layout.fragment_head_lines) {
     }
     private fun loadNewsCategories(category: String?) {
         category?.let {
+            newsAdapter =
+                NewsAdapter(fragment =  categoryFragment, articles = ArrayList<Article>(), newsViewModel)
+            bindingCategory.categoryListRv.apply {
+                adapter = newsAdapter
+                layoutManager = LinearLayoutManager(activity)
+                addOnScrollListener(scrollListener)
+            }
             newsViewModel.getNewsByCategory(it)
         } ?: run {
             newsViewModel.getHeadLines("us")  // في حالة عدم تحديد فئة
@@ -203,24 +236,24 @@ class HeadLinesFragment : Fragment(R.layout.fragment_head_lines) {
         binding.recyclerHeadlines.adapter = newsAdapter
     }
 
-private fun showCategories(categories: List<Category>) {
-    categoriesAdapter = CategoriesAdapter(fragment = this, categories = categories, onItemClick = { category ->
-        selectedCategory = category.name // حفظ الفئة المحددة
-        loadNewsCategories(selectedCategory)
-    })
-
-    binding.categoryRv.apply {
-        adapter = categoriesAdapter
-    }
-}
-private fun loadCategories(): List<Category> {
-    return listOf(
-        Category(R.drawable.tech,"Technology"),
-        Category( R.drawable.sports,"Sports"),
-        Category( R.drawable.business,"Business"),
-        Category( R.drawable.health,"Health")
-    )
-}
+//private fun showCategories(categories: List<Category>) {
+//    categoriesAdapter = CategoriesAdapter(fragment = this, categories = categories, onItemClick = { category ->
+//        selectedCategory = category.name
+//        loadNewsCategories(selectedCategory)
+//    })
+//
+//    binding.categoryRv.apply {
+//        adapter = categoriesAdapter
+//    }
+//}
+//private fun loadCategories(): List<Category> {
+//    return listOf(
+//        Category(R.drawable.tech,"Technology"),
+//        Category( R.drawable.sports,"Sports"),
+//        Category( R.drawable.business,"Business"),
+//        Category( R.drawable.health,"Health")
+//    )
+//}
     override fun onResume() {
         super.onResume()
         binding.paginationProgressBar.isVisible = true

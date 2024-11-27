@@ -25,7 +25,7 @@ import com.training.hearthenews.R
 import com.training.hearthenews.databinding.NewsItemBinding
 import com.training.hearthenews.models.Article
 import com.training.hearthenews.ui.NewsViewModel
-import com.training.hearthenews.ui.fragments.ArticleFragmentArgs
+//import com.training.hearthenews.ui.fragments.CategoryFragmentArgs
 
 class NewsAdapter(val fragment: Fragment, val  articles: MutableList<Article>,private val newsViewModel: NewsViewModel): RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
 

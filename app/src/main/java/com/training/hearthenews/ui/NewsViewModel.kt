@@ -3,6 +3,7 @@ package com.training.hearthenews.ui
 import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
@@ -21,6 +22,7 @@ class NewsViewModel(app: Application, val newsRepository: NewsRepository): Andro
     val headlines:MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     var headlinesPage = 1
     var headlinesResponse: NewsResponse? = null
+    val newsLiveData: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
 
     val searchNews:MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     var searchPage = 1
@@ -39,48 +41,65 @@ class NewsViewModel(app: Application, val newsRepository: NewsRepository): Andro
         searchNewsInternet(searchQuery)
     }
     fun getNewsByCategory(category: String) = viewModelScope.launch {
-        when (category) {
-            "Technology" -> fetchTechnologyNews()
-            "Sports" -> fetchSportsNews()
-            "Health" -> fetchHealthNews()
-            "Business" -> fetchBusinessNews()
-            else -> fetchHeadLines("us")
-        }
-    }
-    private suspend fun fetchTechnologyNews() {
-        val response = newsRepository.getTechnologyNews(headlinesPage)
-        if(response.isSuccessful && response.body()?.articles.isNullOrEmpty()){
-            headlines.postValue(handleHeadLineResponse(response))
-            Toast.makeText(getApplication(), "Response is successful but articles list is empty", Toast.LENGTH_SHORT).show()
-
-        }
-
+//        when (category) {
+//            "Technology" -> fetchTechnologyNews()
+//            "Sports" -> fetchSportsNews()
+//            "Health" -> fetchHealthNews()
+//            "Business" -> fetchBusinessNews()
+//            else -> fetchHeadLines("us")
+//        }
+        fetchNews(category, "us")
     }
 
-    private suspend fun fetchSportsNews() {
-        val response = newsRepository.getSportsNews(headlinesPage)
-        if(response.isSuccessful ){
-            headlines.postValue(handleHeadLineResponse(response))
-            Toast.makeText(getApplication(), "Response is successful but articles list is empty", Toast.LENGTH_SHORT).show()
-        }
-
-    }
-
-    private suspend fun fetchHealthNews() {
-        val response = newsRepository.getHealthNews(headlinesPage)
-        if(response.isSuccessful && response.body()?.articles.isNullOrEmpty()){
-            Toast.makeText(getApplication(), "Response is successful but articles list is empty", Toast.LENGTH_SHORT).show()
-        }
-
-    }
-
-    private suspend fun fetchBusinessNews() {
-        val response = newsRepository.getBusinessNews(headlinesPage)
-        if(response.isSuccessful && response.body()?.articles.isNullOrEmpty()){
-           // headlines.postValue(handleHeadLineResponse(response))
-            Toast.makeText(getApplication(), "Response is successful but articles list is empty", Toast.LENGTH_SHORT).show()
+    private suspend fun fetchNews(category: String, countryCode: String) {
+        newsLiveData.postValue(Resource.Loading())
+        try {
+            if (isInternetAvailable()) {
+                val response = newsRepository.getNewsByCategory(category, "us", headlinesPage)
+                newsLiveData.postValue(handleHeadLineResponse(response))
+                Log.d("NewsViewModel", "Response: ${response.body()}")
+            } else {
+                showNoInternetError()
+            }
+        } catch (t: Throwable) {
+            handleError(t)
         }
     }
+
+//    private suspend fun fetchTechnologyNews() {
+//        val response = newsRepository.getTechnologyNews(headlinesPage)
+//        if(response.isSuccessful && response.body()?.articles.isNullOrEmpty()){
+//            headlines.postValue(handleHeadLineResponse(response))
+//            Toast.makeText(getApplication(), "Response is successful but articles list is empty", Toast.LENGTH_SHORT).show()
+//
+//        }
+//
+//    }
+
+//    private suspend fun fetchSportsNews() {
+//        val response = newsRepository.getSportsNews(headlinesPage)
+//        if(response.isSuccessful ){
+//            headlines.postValue(handleHeadLineResponse(response))
+//            Toast.makeText(getApplication(), "Response is successful but articles list is empty", Toast.LENGTH_SHORT).show()
+//        }
+//
+//    }
+
+//    private suspend fun fetchHealthNews() {
+//        val response = newsRepository.getHealthNews(headlinesPage)
+//        if(response.isSuccessful && response.body()?.articles.isNullOrEmpty()){
+//            Toast.makeText(getApplication(), "Response is successful but articles list is empty", Toast.LENGTH_SHORT).show()
+//        }
+//
+//    }
+
+//    private suspend fun fetchBusinessNews() {
+//        val response = newsRepository.getBusinessNews(headlinesPage)
+//        if(response.isSuccessful && response.body()?.articles.isNullOrEmpty()){
+//           // headlines.postValue(handleHeadLineResponse(response))
+//            Toast.makeText(getApplication(), "Response is successful but articles list is empty", Toast.LENGTH_SHORT).show()
+//        }
+//    }
 
     private suspend fun fetchHeadLines(countryCode: String) {
         val response = newsRepository.getHeadLines(countryCode, headlinesPage)
@@ -205,6 +224,24 @@ class NewsViewModel(app: Application, val newsRepository: NewsRepository): Andro
         }
 
 
+    }
+    private fun isInternetAvailable(): Boolean {
+        val connectivityManager = getApplication<Application>().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val network = connectivityManager.activeNetwork ?: return false
+        val capabilities = connectivityManager.getNetworkCapabilities(network) ?: return false
+        return capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
+                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
+                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)
+    }
+    private fun showNoInternetError() {
+        newsLiveData.postValue(Resource.Error("No internet connection"))
+        Toast.makeText(getApplication(), "No internet connection", Toast.LENGTH_SHORT).show()
+    }
+    private fun handleError(t: Throwable) {
+        when (t) {
+            is IOException -> newsLiveData.postValue(Resource.Error("Network Failure"))
+            else -> newsLiveData.postValue(Resource.Error("Conversion Error"))
+        }
     }
 
 

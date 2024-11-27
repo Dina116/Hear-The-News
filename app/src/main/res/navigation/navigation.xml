@@ -7,20 +7,20 @@
 
 
     <fragment
-        android:id="@+id/articleFragment"
-        android:name="com.training.hearthenews.ui.fragments.ArticleFragment"
+        android:id="@+id/categoryFragment"
+        android:name="com.training.hearthenews.ui.fragments.CategoryFragment"
         android:label="ArticleFragment" >
-        <argument
-            android:name="article"
-            app:argType="com.training.hearthenews.models.Article"/>
+<!--        <argument-->
+<!--            android:name="article"-->
+<!--            app:argType="com.training.hearthenews.models.Article"/>-->
         <action
-            android:id="@+id/action_articleFragment_to_headLinesFragment"
+            android:id="@+id/action_categoryFragment_to_headLinesFragment"
             app:destination="@id/headLinesFragment" />
         <action
-            android:id="@+id/action_articleFragment_to_favouriteFragment"
+            android:id="@+id/action_categoryFragment_to_favouriteFragment"
             app:destination="@id/favouriteFragment" />
         <action
-            android:id="@+id/action_articleFragment_to_searchFragment2"
+            android:id="@+id/action_categoryFragment_to_searchFragment2"
             app:destination="@id/searchFragment2" />
     </fragment>
 
@@ -30,7 +30,7 @@
         android:label="FavouriteFragment" >
         <action
             android:id="@+id/action_favouriteFragment_to_articleFragment"
-            app:destination="@id/articleFragment" />
+            app:destination="@id/categoryFragment" />
         <action
             android:id="@+id/action_favouriteFragment_to_headLinesFragment"
             app:destination="@id/headLinesFragment" />
@@ -43,8 +43,8 @@
             android:id="@+id/action_headLinesFragment_to_searchFragment2"
             app:destination="@id/searchFragment2" />
         <action
-            android:id="@+id/action_headLinesFragment_to_articleFragment"
-            app:destination="@id/articleFragment" />
+            android:id="@+id/action_headLinesFragment_to_categoryFragment"
+            app:destination="@id/categoryFragment" />
         <action
             android:id="@+id/action_headLinesFragment_to_favouriteFragment"
             app:destination="@id/favouriteFragment" />
@@ -63,14 +63,14 @@
         android:name="com.training.hearthenews.ui.fragments.SearchFragment"
         android:label="SearchFragment" >
         <action
-            android:id="@+id/action_searchFragment2_to_articleFragment"
-            app:destination="@id/articleFragment" />
+            android:id="@+id/action_searchFragment2_to_categoryFragment"
+            app:destination="@id/categoryFragment" />
         <action
             android:id="@+id/action_searchFragment2_to_headLinesFragment"
             app:destination="@id/headLinesFragment" />
         <action
-            android:id="@+id/action_searchFragment2_to_articleFragment2"
-            app:destination="@id/articleFragment" />
+            android:id="@+id/action_searchFragment2_to_categoryFragment2"
+            app:destination="@id/categoryFragment" />
         <action
             android:id="@+id/action_searchFragment2_to_favouriteFragment"
             app:destination="@id/favouriteFragment" />

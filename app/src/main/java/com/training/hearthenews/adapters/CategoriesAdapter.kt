@@ -13,19 +13,20 @@ import com.training.hearthenews.ui.CategoryViewModel
 class CategoriesAdapter(
     val fragment: Fragment,
     private val categories: List<Category>,
-    private val onItemClick: (Category) -> Unit
+    //private val listener: OnCategoryClickListener
+  private val onItemClick: (Category) -> Unit
 ) :
     RecyclerView.Adapter<CategoriesAdapter.CategoryViewHolder>() {
     inner class CategoryViewHolder(val binding: CategoryItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+       RecyclerView.ViewHolder(binding.root) {
         fun bind(category: Category) {
             val category = categories[position]
             binding.categoryIv.setImageResource(category.categoryImgId)
             binding.categoryNameTv.text = categories[position].name
 
-            itemView.setOnClickListener {
-                onItemClick(category)
-            }
+//            itemView.setOnClickListener {
+//                onItemClick(category)
+//            }
         }
     }
 
@@ -38,12 +39,19 @@ class CategoriesAdapter(
         return CategoryViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: CategoriesAdapter.CategoryViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         val category = categories[position]
         holder.bind(category)
+        holder.itemView.setOnClickListener {
+           onItemClick(category) // عند الضغط على الـ Category
+        }
     }
 
     override fun getItemCount(): Int = categories.size
+
+    interface OnCategoryClickListener {
+        fun onCategoryClick(category: Category)
+    }
 
 
 }
