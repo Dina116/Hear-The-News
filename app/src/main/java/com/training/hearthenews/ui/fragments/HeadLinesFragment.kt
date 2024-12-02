@@ -22,10 +22,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.FirebaseApp
 import com.training.hearthenews.R
 import com.training.hearthenews.adapters.CategoriesAdapter
 import com.training.hearthenews.adapters.NewsAdapter
 import com.training.hearthenews.api.NewsApi
+import com.training.hearthenews.databinding.CategoryItemBinding
 import com.training.hearthenews.databinding.FragmentCategoryBinding
 import com.training.hearthenews.databinding.FragmentHeadLinesBinding
 import com.training.hearthenews.models.Article
@@ -36,6 +38,8 @@ import com.training.hearthenews.ui.MainActivity
 import com.training.hearthenews.ui.NewsViewModel
 import com.training.hearthenews.util.Constants
 import com.training.hearthenews.util.Resource
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.w3c.dom.Text
 import retrofit2.Call
@@ -55,6 +59,7 @@ class HeadLinesFragment : Fragment(R.layout.fragment_head_lines) {
     lateinit var binding: FragmentHeadLinesBinding
      lateinit var categoryFragment:CategoryFragment
      lateinit var bindingCategory:FragmentCategoryBinding
+     lateinit var bindinglist:CategoryItemBinding
 
     var selectedCategory: String? = null
 
@@ -66,14 +71,17 @@ class HeadLinesFragment : Fragment(R.layout.fragment_head_lines) {
     )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        FirebaseApp.initializeApp(requireContext())
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHeadLinesBinding.bind(view)
         categoriesAdapter = CategoriesAdapter(
             fragment = this, categories,
             onItemClick = { category ->
                 selectedCategory = category.name
+                val categoryName = selectedCategory ?:""
+
                 Toast.makeText(activity, "Go to news of category you select", Toast.LENGTH_SHORT).show()
-                val action = HeadLinesFragmentDirections.actionHeadLinesFragmentToCategoryFragment()
+                val action = HeadLinesFragmentDirections.actionHeadLinesFragmentToCategoryFragment(categoryName)
                 findNavController().navigate(action)
                 loadNewsCategories(selectedCategory)
             },
@@ -95,13 +103,14 @@ class HeadLinesFragment : Fragment(R.layout.fragment_head_lines) {
         newsViewModel = (activity as MainActivity).newsViewModel
         categoryFragment = CategoryFragment()
         bindingCategory = FragmentCategoryBinding.inflate(layoutInflater)
+        bindinglist = CategoryItemBinding.inflate(layoutInflater)
 
         setUpHeadLinesRecycler()
 
         newsAdapter.setOnItemClickListener { article ->
 
             val action =
-                HeadLinesFragmentDirections.actionHeadLinesFragmentToCategoryFragment()
+                HeadLinesFragmentDirections.actionHeadLinesFragmentToCategoryFragment(categoryName = bindinglist.categoryNameTv.text.toString())
             findNavController().navigate(action)
         }
         newsViewModel.headlines.observe(viewLifecycleOwner, Observer { response ->

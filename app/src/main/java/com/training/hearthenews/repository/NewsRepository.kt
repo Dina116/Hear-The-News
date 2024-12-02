@@ -18,6 +18,9 @@ class NewsRepository(val db: ArticleDataBase) {
         return  RetrofitInstance.api.searchForNews(searchQuery, pageNumber)
 
     }
+    suspend fun getSources(countryCode: String, pageNumber: Int): Response<NewsResponse> {
+        return RetrofitInstance.api.getSources(countryCode, pageNumber)
+    }
     suspend fun getNewsByCategory(category: String, countryCode: String, pageNumber: Int): Response<NewsResponse> {
         return RetrofitInstance.api.getNewsByCategory(category = category, countryCode = countryCode,pageNumber = pageNumber)
     }

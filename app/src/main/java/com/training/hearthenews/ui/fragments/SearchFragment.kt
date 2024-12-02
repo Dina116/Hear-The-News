@@ -16,8 +16,10 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.FirebaseApp
 import com.training.hearthenews.R
 import com.training.hearthenews.adapters.NewsAdapter
+import com.training.hearthenews.databinding.CategoryItemBinding
 import com.training.hearthenews.databinding.FragmentSearchBinding
 import com.training.hearthenews.models.Article
 import com.training.hearthenews.ui.MainActivity
@@ -39,10 +41,13 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     lateinit var errorText: TextView
     lateinit var itemSearchError: CardView
     lateinit var binding: FragmentSearchBinding
+    lateinit var bindingcategory: CategoryItemBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding=FragmentSearchBinding.bind(view)
+        bindingcategory = CategoryItemBinding.inflate(layoutInflater)
+
         itemSearchError = view.findViewById(R.id.itemSearchError)
         val inflater =
             requireContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -58,7 +63,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             val bundle = Bundle().apply {
                 putSerializable("article", it)
             }
-            val action=SearchFragmentDirections.actionSearchFragment2ToCategoryFragment()
+            val action=SearchFragmentDirections.actionSearchFragment2ToCategoryFragment(bindingcategory.categoryNameTv.text.toString())
             findNavController().navigate(action)
         }
 

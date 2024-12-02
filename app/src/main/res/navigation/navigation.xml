@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/headLinesFragment">
+    app:startDestination="@id/splashFragment">
 
 
     <fragment
@@ -22,6 +22,10 @@
         <action
             android:id="@+id/action_categoryFragment_to_searchFragment2"
             app:destination="@id/searchFragment2" />
+
+        <argument
+            android:name="categoryName"
+            app:argType="string" />
     </fragment>
 
     <fragment
@@ -34,6 +38,9 @@
         <action
             android:id="@+id/action_favouriteFragment_to_headLinesFragment"
             app:destination="@id/headLinesFragment" />
+        <action
+            android:id="@+id/action_favouriteFragment_to_trendsFragment"
+            app:destination="@id/trendsFragment" />
     </fragment>
     <fragment
         android:id="@+id/headLinesFragment"
@@ -48,6 +55,15 @@
         <action
             android:id="@+id/action_headLinesFragment_to_favouriteFragment"
             app:destination="@id/favouriteFragment" />
+        <action
+            android:id="@+id/action_headLinesFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_headLinesFragment_to_signupFragment"
+            app:destination="@id/signupFragment" />
+        <action
+            android:id="@+id/action_headLinesFragment_to_trendsFragment"
+            app:destination="@id/trendsFragment" />
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
@@ -57,6 +73,12 @@
         <action
             android:id="@+id/action_splashFragment_to_headLinesFragment"
             app:destination="@id/headLinesFragment" />
+        <action
+            android:id="@+id/action_splashFragment_to_signupFragment"
+            app:destination="@id/signupFragment" />
+        <action
+            android:id="@+id/action_splashFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment2"
@@ -74,6 +96,9 @@
         <action
             android:id="@+id/action_searchFragment2_to_favouriteFragment"
             app:destination="@id/favouriteFragment" />
+        <action
+            android:id="@+id/action_searchFragment2_to_trendsFragment"
+            app:destination="@id/trendsFragment" />
     </fragment>
     <action
         android:id="@+id/action_global_to_favouriteFragment"
@@ -82,4 +107,55 @@
     <action
         android:id="@+id/action_global_to_searchFragment"
         app:destination="@id/searchFragment2" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.training.hearthenews.ui.fragments.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_signupFragment"
+            app:destination="@id/signupFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_headLinesFragment"
+            app:destination="@id/headLinesFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
+            app:destination="@id/forgotPasswordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signupFragment"
+        android:name="com.training.hearthenews.ui.fragments.SignupFragment"
+        android:label="fragment_signup"
+        tools:layout="@layout/fragment_signup" >
+        <action
+            android:id="@+id/action_signupFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_signupFragment_to_headLinesFragment"
+            app:destination="@id/headLinesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/forgotPasswordFragment"
+        android:name="com.training.hearthenews.ui.fragments.ForgotPasswordFragment"
+        android:label="fragment_forgot_password"
+        tools:layout="@layout/fragment_forgot_password" >
+        <action
+            android:id="@+id/action_forgotPasswordFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/trendsFragment"
+        android:name="com.training.hearthenews.ui.fragments.TrendsFragment"
+        android:label="fragment_trends"
+        tools:layout="@layout/fragment_trends" >
+        <action
+            android:id="@+id/action_trendsFragment_to_headLinesFragment"
+            app:destination="@id/headLinesFragment" />
+        <action
+            android:id="@+id/action_trendsFragment_to_favouriteFragment"
+            app:destination="@id/favouriteFragment" />
+        <action
+            android:id="@+id/action_trendsFragment_to_searchFragment2"
+            app:destination="@id/searchFragment2" />
+    </fragment>
 </navigation>

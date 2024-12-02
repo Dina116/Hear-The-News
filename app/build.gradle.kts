@@ -4,6 +4,7 @@ plugins {
     id("com.google.devtools.ksp")
 
     id("androidx.navigation.safeargs.kotlin")
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -78,4 +79,8 @@ dependencies {
     ksp ("com.github.bumptech.glide:compiler:4.12.0")
 
     implementation("com.squareup.okhttp3:okhttp:4.9.0")
+
+    implementation ("com.google.firebase:firebase-auth:21.0.3")
+    //Fire store
+   // implementation("com.google.firebase:firebase-firestore")
 }

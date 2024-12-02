@@ -12,8 +12,10 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.FirebaseApp
 import com.training.hearthenews.R
 import com.training.hearthenews.adapters.NewsAdapter
+import com.training.hearthenews.databinding.CategoryItemBinding
 import com.training.hearthenews.databinding.FragmentFavouriteBinding
 import com.training.hearthenews.models.Article
 import com.training.hearthenews.ui.MainActivity
@@ -24,16 +26,20 @@ class FavouriteFragment : Fragment(R.layout.fragment_favourite) {
     lateinit var newsViewModel: NewsViewModel
     lateinit var newsAdapter: NewsAdapter
     lateinit var binding: FragmentFavouriteBinding
+    lateinit var bindingcategory: CategoryItemBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+       // FirebaseApp.initializeApp(requireContext())
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentFavouriteBinding.bind(view)
+        bindingcategory = CategoryItemBinding.inflate(layoutInflater)
 
         newsViewModel = (activity as MainActivity).newsViewModel
         setUpFavouriteRecycler()
 
+
         newsAdapter.setOnItemClickListener {
-            val action = FavouriteFragmentDirections.actionFavouriteFragmentToArticleFragment()
+            val action = FavouriteFragmentDirections.actionFavouriteFragmentToArticleFragment(bindingcategory.categoryNameTv.text.toString())
             findNavController().navigate(action)
         }
         val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(

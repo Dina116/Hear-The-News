@@ -17,5 +17,4 @@ interface ArticleDao {
     @Delete
     suspend fun deleteArticle(article: Article)
 
-
 }
