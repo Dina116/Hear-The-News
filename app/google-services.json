@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "708970240019",
+    "project_id": "hear-the-news",
+    "storage_bucket": "hear-the-news.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:708970240019:android:4e2c80c5c78e0ff03e07e6",
+        "android_client_info": {
+          "package_name": "com.training.hearthenews"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpk_sl_0yEOOmjB6soMaicW_Bgpv9FT58"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

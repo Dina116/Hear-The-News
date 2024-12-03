@@ -98,7 +98,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.trendFragment -> {
                     navController.navigate(R.id.trendsFragment)
-                    Toast.makeText(this, "Go To trends", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Go To top news", Toast.LENGTH_SHORT).show()
                     true
                 }
                 else -> false
@@ -124,7 +124,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.trendFragment -> {
                     navController.navigate(R.id.trendsFragment)
-                    Toast.makeText(this, "Go To trends", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Go To top news", Toast.LENGTH_SHORT).show()
                     true
                 }
                 else -> false

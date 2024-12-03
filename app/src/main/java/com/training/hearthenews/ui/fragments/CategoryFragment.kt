@@ -93,15 +93,15 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
                     }
                     else {
                         Log.w("Empty Articles", "No articles found for category: $category")
-                        Snackbar.make(requireView(), "No articles found for this category.", Snackbar.LENGTH_LONG).show()
+                        //Snackbar.make(requireView(), "No articles found for this category.", Snackbar.LENGTH_LONG).show()
                     }
 
                 } else {
                     Log.e("API Error", "Code: ${response.code()}, Message: ${response.message()}")
-                    Snackbar.make(requireView(), "Failed to fetch news.", Snackbar.LENGTH_LONG).show()
+                    //Snackbar.make(requireView(), "Failed to fetch news.", Snackbar.LENGTH_LONG).show()
                 }
             } catch (e: Exception) {
-                Snackbar.make(requireView(), "An error occurred: ${e.message}", Snackbar.LENGTH_LONG).show()
+               // Snackbar.make(requireView(), "An error occurred: ${e.message}", Snackbar.LENGTH_LONG).show()
             }
         }
     }

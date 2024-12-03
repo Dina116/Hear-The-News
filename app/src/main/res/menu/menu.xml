@@ -14,6 +14,6 @@
         android:icon="@drawable/ic_search" />
     <item
         android:id="@+id/trendFragment"
-        android:title="Trends"
+        android:title="Top news"
         android:icon="@drawable/ic_trend" />
 </menu>
