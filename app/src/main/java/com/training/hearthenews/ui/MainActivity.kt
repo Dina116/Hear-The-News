@@ -47,9 +47,14 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.newsNavHostFragment) as NavHostFragment
         navController = navHostFragment.navController
         firebaseAuth = FirebaseAuth.getInstance()
-        if (firebaseAuth.currentUser == null) {
+        if (firebaseAuth.currentUser != null) {
+            navController.navigate(R.id.headLinesFragment)
+        } else {
             navController.navigate(R.id.signupFragment)
         }
+//        if (firebaseAuth.currentUser == null) {
+//            navController.navigate(R.id.signupFragment)
+//        }
 //
 //        Handler(Looper.getMainLooper()).post {
             // Access Firebase here
@@ -68,7 +73,7 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.setupWithNavController(navController)
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.splashFragment, R.id.loginFragment, R.id.signupFragment -> {
+                R.id.splashFragment, R.id.loginFragment, R.id.signupFragment,R.id.forgotPasswordFragment -> {
                     bottomNavigationView.visibility = View.GONE
                 }
                 else -> {

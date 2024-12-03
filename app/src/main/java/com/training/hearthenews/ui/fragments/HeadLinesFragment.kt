@@ -5,6 +5,9 @@ import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AbsListView
@@ -14,8 +17,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.launch
 import androidx.cardview.widget.CardView
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -74,6 +80,25 @@ class HeadLinesFragment : Fragment(R.layout.fragment_head_lines) {
 //        FirebaseApp.initializeApp(requireContext())
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHeadLinesBinding.bind(view)
+//        val menuHost: MenuHost = requireActivity()
+//        binding.menuHam.setOnClickListener {
+//            menuHost.addMenuProvider(object :MenuProvider{
+//                override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+//                    menuInflater.inflate(R.menu.menu_ham,menu)
+//                }
+//                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+//                    return  when (menuItem.itemId){
+//                        R.id.logout ->{
+//                            findNavController().navigate(R.id.action_headLinesFragment_to_loginFragment)
+//                            true
+//                        }
+//                        else -> false
+//                    }
+//                }
+//            }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+//        }
+
+
         categoriesAdapter = CategoriesAdapter(
             fragment = this, categories,
             onItemClick = { category ->
